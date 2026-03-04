@@ -6,6 +6,20 @@
 
 ## Skills
 
+### Document skills — for collaborative work
+
+These turn transcripts of real conversations into structured shaping documents. They're useful on real production projects where you're working with other people and want to capture what was said in a format you can act on.
+
+**These are extremely GIGO (garbage in, garbage out).** They don't evaluate whether the material makes sense or is reasonable. They format and distill — that's it. When your inputs are good conversations with good thinking, they save a ton of time. When your inputs are bad, you get a nicely formatted bad document.
+
+**`/framing-doc`** — Turn conversation transcripts into a framing document that captures the problem worth solving and why it was chosen over alternatives.
+
+**`/kickoff-doc`** — Turn a shaped project kickoff transcript into a reference document for the builder, capturing what was shaped and agreed.
+
+### Solo skills — more experimental
+
+These are for working with Claude directly on shaping and design. They're more experimental and less battle-tested than the document skills.
+
 **`/shaping`** — Iterate on both the problem (requirements) and solution (shapes) before committing to implementation. Separates what you need from how you might build it, with fit checks to see what's solved and what isn't.
 
 **`/breadboarding`** — Map a system into UI affordances, code affordances, and wiring. Shows what users can do and how it works underneath — in one view. Good for slicing into vertical scopes.
@@ -15,6 +29,8 @@
 ```bash
 # Clone the repo, then symlink each skill into your Claude Code skills directory
 git clone https://github.com/rjs/shaping-skills.git ~/.local/share/shaping-skills
+ln -s ~/.local/share/shaping-skills/framing-doc ~/.claude/skills/framing-doc
+ln -s ~/.local/share/shaping-skills/kickoff-doc ~/.claude/skills/kickoff-doc
 ln -s ~/.local/share/shaping-skills/breadboarding ~/.claude/skills/breadboarding
 ln -s ~/.local/share/shaping-skills/shaping ~/.claude/skills/shaping
 ```
