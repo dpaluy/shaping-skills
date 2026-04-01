@@ -5,7 +5,7 @@
 # Outputs rendered HTML to .gfm-preview.html
 # Pass --open to open in browser automatically
 
-FILE="${1:-breadboarding/skill.md}"
+FILE="${1:-breadboarding/SKILL.md}"
 OPEN=false
 for arg in "$@"; do [[ "$arg" == "--open" ]] && OPEN=true; done
 

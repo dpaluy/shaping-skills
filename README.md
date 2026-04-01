@@ -1,47 +1,172 @@
 # Shaping Skills
 
-[Claude Code](https://claude.com/claude-code) skills for shaping and breadboarding — the methodology from [Shape Up](https://basecamp.com/shapeup) adapted for working with an LLM.
+Skills for shaping product ideas into buildable software with LLM coding agents.
 
-**Case study:** [Shaping 0-1 with Claude Code](https://x.com/rjs/status/2020184079350563263) walks through the full process of building a project from scratch using these skills. The source for that project is at [rjs/tick](https://github.com/rjs/tick).
+This repo encodes a workflow from [Shape Up](https://basecamp.com/shapeup):
+
+1. Capture the problem and initial solution shape
+2. Check fit between requirements and the shape
+3. Spike unknowns
+4. Breadboard the selected shape into concrete affordances and wiring
+5. Slice the system into demoable vertical scopes
+6. Build slice by slice
+
+The skills work with both Codex and Claude.
+
+## Case Study
+
+[Shaping 0-1 with Claude Code](https://x.com/rjs/status/2020184079350563263) shows the workflow end to end: blank directory -> shaping doc -> spikes -> breadboard -> slices -> working product.
+
+That article is useful because it shows the actual interaction pattern, not just the final docs. The companion project is here:
+
+- [rjs/tick](https://github.com/rjs/tick)
+
+## What These Skills Produce
+
+- **Frame**: source material, problem, and outcome
+- **Shaping doc**: requirements (`R`), shapes (`A`, `B`, `C`), fit checks, and breadboards
+- **Spike docs**: separate investigation files for unknowns
+- **Slices doc**: vertical implementation slices with demos and wiring
+- **Slice plans**: build plans for each slice (`V1-plan.md`, etc.)
+
+The point is not to make prettier markdown. The point is to force the agent to separate requirements from mechanisms, expose unknowns, and make scope decisions explicit before it starts coding.
 
 ## Skills
 
-### Document skills — for collaborative work
+| Skill | What it does | Use it when |
+|------|---------------|-------------|
+| `shaping` | Captures requirements, shapes, fit checks, spikes, and slice handoff | You are defining a feature, comparing solutions, or scoping work before implementation |
+| `breadboarding` | Maps UI affordances, code affordances, stores, places, and wiring | You need to understand or detail how a system works in concrete terms |
+| `breadboard-reflection` | Syncs a breadboard to the implementation and surfaces design smells | You already have a breadboard and want to check it against the code |
+| `framing-doc` | Distills transcripts into a frame with problem, outcome, and evidence | You have source conversations and need the "why now" documented |
+| `kickoff-doc` | Converts a kickoff transcript into a builder-facing territory map | The work is shaped and you want a usable handoff doc |
 
-These turn transcripts of real conversations into structured shaping documents. They're useful on real production projects where you're working with other people and want to capture what was said in a format you can act on.
+## Typical Workflow
 
-**These are extremely GIGO (garbage in, garbage out).** They don't evaluate whether the material makes sense or is reasonable. They format and distill — that's it. When your inputs are good conversations with good thinking, they save a ton of time. When your inputs are bad, you get a nicely formatted bad document.
+### 1. Start with shaping
 
-**`/framing-doc`** — Turn conversation transcripts into a framing document that captures the problem worth solving and why it was chosen over alternatives.
+Ask the agent to use the `shaping` skill before implementation starts.
 
-**`/kickoff-doc`** — Turn a shaped project kickoff transcript into a reference document for the builder, capturing what was shaped and agreed.
+Examples:
 
-### Solo skills — more experimental
+```text
+Use your shaping skill to capture the requirements and tease apart the key parts of solution A.
+```
 
-These are for working with Claude directly on shaping and design. They're more experimental and less battle-tested than the document skills.
+```text
+Help me shape this feature before we build it.
+```
 
-**`/shaping`** — Iterate on both the problem (requirements) and solution (shapes) before committing to implementation. Separates what you need from how you might build it, with fit checks to see what's solved and what isn't.
+### 2. Check fit
 
-**`/breadboarding`** — Map a system into UI affordances, code affordances, and wiring. Shows what users can do and how it works underneath — in one view. Good for slicing into vertical scopes.
+Once the first shape exists, inspect how well it satisfies the requirements.
 
-## Install
+Examples:
+
+```text
+Show me R x A.
+```
+
+```text
+Rotate the fit check and show me A x R.
+```
+
+This is the core move. It shows what is solved, what is still fuzzy, and what needs investigation.
+
+### 3. Spike the unknowns
+
+When part of the shape is still hand-wavy, spike it.
+
+Examples:
+
+```text
+Please spike A2.
+```
+
+```text
+Can you spike the local LLM piece?
+```
+
+Spikes should produce separate markdown files so the findings are preserved and can feed back into the shape.
+
+### 4. Breadboard the chosen shape
+
+Once the shape is good enough, translate it into concrete affordances and wiring.
+
+Example:
+
+```text
+Let's breadboard A.
+```
+
+Breadboarding is what makes slicing sane. Without it, vertical slicing turns into guesswork.
+
+### 5. Slice vertically
+
+Once the breadboard exists, slice the system into demoable scopes.
+
+Example:
+
+```text
+Let's slice it.
+```
+
+Each slice should end in a real demo, not a horizontal layer. The goal is to build something you can show, learn from, and either continue or cut.
+
+### 6. Build one slice at a time
+
+After slicing, ask for an implementation plan and self-test approach for the first slice.
+
+Example:
+
+```text
+Please make an implementation plan for the first slice. Include how you will test it yourself to ensure it's working.
+```
+
+## Codex
+
+### Use this repo directly
+
+Open the repository in Codex. Repo-scoped skills are exposed through `.agents/skills/`.
+
+This repo also includes a publishable Codex plugin layout:
+
+- Plugin manifest: `plugins/shaping-skills/.codex-plugin/plugin.json`
+- Repo marketplace entry: `.agents/plugins/marketplace.json`
+
+Top-level skill directories are the canonical source. Codex-facing copies are synced into:
+
+- `.agents/skills/`
+- `plugins/shaping-skills/skills/`
+
+### Reuse the plugin elsewhere
+
+To install the plugin outside this repo, copy or symlink `plugins/shaping-skills/` into your local plugin directory and mirror the marketplace entry in `.agents/plugins/marketplace.json`.
+
+## Claude
+
+Clone the repo, then symlink each skill into your Claude skills directory:
 
 ```bash
-# Clone the repo, then symlink each skill into your Claude Code skills directory
-git clone https://github.com/rjs/shaping-skills.git ~/.local/share/shaping-skills
+git clone https://github.com/dpaluy/shaping-skills.git ~/.local/share/shaping-skills
 ln -s ~/.local/share/shaping-skills/framing-doc ~/.claude/skills/framing-doc
 ln -s ~/.local/share/shaping-skills/kickoff-doc ~/.claude/skills/kickoff-doc
 ln -s ~/.local/share/shaping-skills/breadboarding ~/.claude/skills/breadboarding
+ln -s ~/.local/share/shaping-skills/breadboard-reflection ~/.claude/skills/breadboard-reflection
 ln -s ~/.local/share/shaping-skills/shaping ~/.claude/skills/shaping
 ```
 
-Each skill must be a direct child of `~/.claude/skills/` so Claude Code can discover it. Symlinks keep them updatable with `git pull`.
+Each skill must be a direct child of `~/.claude/skills/` so Claude can discover it.
 
-## Hook: Ripple Check
+## Ripple Hook
 
-The repo includes a hook that reminds Claude to check for ripple effects when editing shaping documents. When Claude writes or edits a `.md` file with `shaping: true` in its frontmatter, the hook prompts a checklist — update affordance tables, fit checks, work streams, etc.
+The repo includes a hook that reminds Claude to check ripple effects when editing shaping documents. When a `.md` file with `shaping: true` in its frontmatter is written or edited, the hook prompts a short checklist:
 
-### Setup
+- update affordance tables before re-rendering Mermaid
+- update fit checks when requirements or shape parts change
+- update work stream detail when the work stream design changes
+
+### Claude setup
 
 1. Symlink the hook script:
 
@@ -50,7 +175,7 @@ mkdir -p ~/.claude/hooks
 ln -s ~/.local/share/shaping-skills/hooks/shaping-ripple.sh ~/.claude/hooks/shaping-ripple.sh
 ```
 
-2. Add the hook to your `~/.claude/settings.json`:
+2. Add the hook to `~/.claude/settings.json`:
 
 ```json
 {
@@ -71,8 +196,26 @@ ln -s ~/.local/share/shaping-skills/hooks/shaping-ripple.sh ~/.claude/hooks/shap
 }
 ```
 
-This fires after every `Write` or `Edit` tool call. It only activates for shaping documents (those with `shaping: true` frontmatter) — all other files pass through silently.
+### Codex note
 
----
+Codex hooks are not a drop-in replacement for the Claude edit hook. This repo keeps ripple reminders in the skill instructions for Codex rather than pretending there is exact hook parity.
 
-This README was written by [Claude Code](https://claude.com/claude-code).
+## Maintainers
+
+After editing any canonical skill, sync the Codex-facing copies:
+
+```bash
+./scripts/sync-codex-skills.sh
+```
+
+Then validate the packaging:
+
+```bash
+./scripts/validate-skills.sh
+```
+
+To preview markdown through GitHub Flavored Markdown:
+
+```bash
+./test-gfm.sh breadboarding/SKILL.md
+```
