@@ -1,0 +1,20 @@
+{
+  "name": "shaping-skills",
+  "interface": {
+    "displayName": "Shaping Skills"
+  },
+  "plugins": [
+    {
+      "name": "shaping-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/shaping-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

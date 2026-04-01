@@ -1,6 +1,6 @@
 ---
 name: breadboarding
-description: Transform a workflow description into affordance tables showing UI and Code affordances with their wiring. Use to map existing systems or design new ones from shaped parts.
+description: Use when the user wants to map an existing or proposed system into UI and code affordances, places, stores, and wiring, or slice a breadboarded shape into vertical increments.
 ---
 
 # Breadboarding
@@ -1016,6 +1016,23 @@ The shape guides what counts as "meaningful progress" — you're not just groupi
 
 Aim for ≤9 slices. If you need more, the shape may be too large for one cycle.
 
+### Cutting
+
+When the breadboard implies more than 9 slices, cut — do not compress.
+
+Compressing forces slices too large to demo a single mechanism. Cutting removes mechanisms from this cycle entirely.
+
+Present cut candidates explicitly. Do not silently merge or omit. Use this format:
+
+- **In scope (this cycle):** Slices V1–VN demonstrating mechanisms X, Y, Z
+- **Cut (not this cycle):** Mechanisms A, B — reason for deferral
+
+The human decides what is cut. This is an appetite decision. The breadboard's job is to make the trade-off visible, not to make the call.
+
+When a slice is cut, add a **Cut** section at the bottom of the slice summary with a one-line reason. Do not delete it — deferred work is different from rejected work.
+
+Cutting is also available at each implementation gate. If a slice runs long or reveals unexpected complexity, a later slice can be cut rather than the timeline extended. Named slices make this visible and explicit.
+
 ### Wires to Future Slices
 
 A slice may contain affordances with Wires Out pointing to affordances in later slices. These wires exist in the breadboard but aren't implemented yet — they're stubs or no-ops until that later slice is built.
@@ -1043,9 +1060,25 @@ Look at the mechanisms in your shape. Each slice should demonstrate a mechanism 
 - V4: URL state persistence (demonstrates the state preservation mechanism)
 - etc.
 
-**Max 9 slices.** If you have more, combine related mechanisms. Features that don't make sense alone should be in the same slice.
+**Max 9 slices.** If you have more, cut scope rather than compress slices into oversized demos. Features that do not make sense alone can share a slice, but do not merge unrelated mechanisms just to satisfy the cap.
 
-**Step 3: Assign affordances to slices**
+**Step 3: Sequence slices in two passes**
+
+Slice order is not intuitive. Apply two passes in sequence.
+
+**Pass 1 — Dependencies**
+
+Map which slices depend on other slices. A slice depends on another when it requires affordances, data structures, routes, or stores that the other slice produces. Start with slices that have no dependencies and work upward to build the causal chain. This gives you the minimum valid ordering — constraints you cannot violate.
+
+**Pass 2 — Unknowns**
+
+Among slices with no blocking dependency, ask: which has the biggest unknown? An unknown is something where you do not know if it is feasible, how it works, or how long it will take. Move the slice with the biggest unknown as early as possible. This creates the most time to solve the hard problem before it becomes a crisis.
+
+Start by identifying what is routine and familiar — what remains are the unknowns.
+
+The final sequence: dependencies set the floor, unknowns break ties within that floor.
+
+**Step 4: Assign affordances to slices**
 
 Go through every affordance and assign it to the slice where it's first needed to demo that slice's mechanism:
 
@@ -1057,7 +1090,7 @@ Go through every affordance and assign it to the slice where it's first needed t
 
 Some affordances may have Wires Out to later slices — that's fine. They're implemented in their assigned slice; the wires just don't do anything yet.
 
-**Step 4: Create per-slice affordance tables**
+**Step 5: Create per-slice affordance tables**
 
 For each slice, extract just the affordances being added:
 
@@ -1069,7 +1102,7 @@ For each slice, extract just the affordances being added:
 | N1 | search-detail | `activeQuery.next()` | call | → N2 | — |
 | N2 | search-detail | `activeQuery` subscription | observe | → N3 | — |
 
-**Step 5: Write a demo statement for each slice**
+**Step 6: Write a demo statement and exit condition for each slice**
 
 Each slice needs a concrete demo that shows its mechanism working toward the R:
 - V1: "Widget shows real data from the API"
@@ -1077,6 +1110,16 @@ Each slice needs a concrete demo that shows its mechanism working toward the R:
 - V3: "Scroll down, more items load"
 
 The demo should be something you can show a stakeholder that demonstrates progress.
+
+Exit conditions are defined right-to-left. A slice is done when it produces the output the next slice needs as input — not when it feels abstractly complete.
+
+Before finalizing each slice's scope, look at what comes immediately after it in the sequence. Ask: what does that next slice need to start? The current slice must deliver exactly that — no more, no less.
+
+This prevents two failure modes:
+- **Scope creep left:** building things you will need later later before the next slice needs them
+- **Underdelivery:** stopping before the next slice has what it needs to start
+
+Include what each slice produces for the next slice to consume. If you cannot name this, the slice boundary may be in the wrong place.
 
 ### Visualizing Slices in Mermaid
 
@@ -1119,14 +1162,21 @@ This lets stakeholders see:
 
 ### Slice Summary Format
 
-| # | Slice | Mechanism | Demo |
-|---|-------|-----------|------|
-| V1 | Widget with real data | F1, F4, F6 | "Widget shows letters from API" |
-| V2 | Search works | F3 | "Type to filter results" |
-| V3 | Infinite scroll | F5 | "Scroll down, more load" |
-| V4 | URL state | F2 | "Refresh preserves search" |
+| # | Slice | Mechanism | Demo | Produces |
+|---|-------|-----------|------|----------|
+| V1 | Widget with real data | F1, F4, F6 | "Widget shows letters from API" | Real data rendered in the widget for search to act on |
+| V2 | Search works | F3 | "Type to filter results" | Filtered result set and active query state |
+| V3 | Infinite scroll | F5 | "Scroll down, more load" | Paginated result loading with working continuation state |
+| V4 | URL state | F2 | "Refresh preserves search" | Durable state for revisit, refresh, and back button |
 
 The Mechanism column references parts from the shape, showing which mechanisms each slice demonstrates.
+
+If scope was deferred, add:
+
+```markdown
+**Cut**
+- [Mechanism or slice] — [one-line reason for deferral]
+```
 
 ---
 ---
