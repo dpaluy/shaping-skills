@@ -10,25 +10,31 @@ SKILLS=(
   breadboard-reflection
 )
 
+sync_skill_tree() {
+  local source_dir="$1"
+  local target_dir="$2"
+
+  [[ -d "$source_dir" ]] || {
+    echo "Missing source skill directory: $source_dir" >&2
+    exit 1
+  }
+
+  case "$target_dir" in
+    "$ROOT/.agents/skills/"*|"$ROOT/plugins/shaping-skills/skills/"*) ;;
+    *)
+      echo "Refusing to sync unexpected target: $target_dir" >&2
+      exit 1
+      ;;
+  esac
+
+  rm -rf "$target_dir"
+  mkdir -p "$target_dir"
+  cp -R "$source_dir/." "$target_dir/"
+}
+
 for skill in "${SKILLS[@]}"; do
-  mkdir -p \
-    "$ROOT/.agents/skills/$skill/agents" \
-    "$ROOT/plugins/shaping-skills/skills/$skill/agents"
-
-  cp "$ROOT/$skill/SKILL.md" "$ROOT/.agents/skills/$skill/SKILL.md"
-  cp "$ROOT/$skill/agents/openai.yaml" "$ROOT/.agents/skills/$skill/agents/openai.yaml"
-
-  cp "$ROOT/$skill/SKILL.md" "$ROOT/plugins/shaping-skills/skills/$skill/SKILL.md"
-  cp "$ROOT/$skill/agents/openai.yaml" "$ROOT/plugins/shaping-skills/skills/$skill/agents/openai.yaml"
-
-  if [[ -d "$ROOT/$skill/references" ]]; then
-    mkdir -p \
-      "$ROOT/.agents/skills/$skill/references" \
-      "$ROOT/plugins/shaping-skills/skills/$skill/references"
-
-    cp -R "$ROOT/$skill/references/." "$ROOT/.agents/skills/$skill/references/"
-    cp -R "$ROOT/$skill/references/." "$ROOT/plugins/shaping-skills/skills/$skill/references/"
-  fi
+  sync_skill_tree "$ROOT/$skill" "$ROOT/.agents/skills/$skill"
+  sync_skill_tree "$ROOT/$skill" "$ROOT/plugins/shaping-skills/skills/$skill"
 done
 
 echo "Synced canonical skills into .agents/skills and plugins/shaping-skills/skills."

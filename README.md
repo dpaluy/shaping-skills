@@ -27,7 +27,7 @@ That article is useful because it shows the actual interaction pattern, not just
 - **Shaping doc**: requirements (`R`), shapes (`A`, `B`, `C`), fit checks, and breadboards
 - **Spike docs**: separate investigation files for unknowns
 - **Slices doc**: vertical implementation slices with demos and wiring
-- **Slice plans**: build plans for each slice (`V1-plan.md`, etc.)
+- **Slice plans**: markdown build-plan files for each slice (`V1-plan.md`, etc.)
 
 The point is not to make prettier markdown. The point is to force the agent to separate requirements from mechanisms, expose unknowns, and make scope decisions explicit before it starts coding.
 
@@ -115,12 +115,12 @@ Each slice should end in a real demo, not a horizontal layer. The goal is to bui
 
 ### 6. Build one slice at a time
 
-After slicing, ask for an implementation plan and self-test approach for the first slice.
+After slicing, have the agent write the first slice's implementation plan and self-test approach into a markdown file instead of presenting the plan in terminal output.
 
 Example:
 
 ```text
-Please make an implementation plan for the first slice. Include how you will test it yourself to ensure it's working.
+Please write `V1-plan.md` for the first slice. Include how you will test it yourself to ensure it's working, then open the markdown file for review.
 ```
 
 ## Codex
@@ -141,7 +141,32 @@ Top-level skill directories are the canonical source. Codex-facing copies are sy
 
 ### Reuse the plugin elsewhere
 
-To install the plugin outside this repo, copy or symlink `plugins/shaping-skills/` into your local plugin directory and mirror the marketplace entry in `.agents/plugins/marketplace.json`.
+Codex resolves the plugin path relative to the marketplace file. The shipped marketplace entry uses `./plugins/shaping-skills`, so the filesystem layout must match that path exactly.
+
+Repo-local layout:
+
+```text
+<repo>/
+├── .agents/plugins/marketplace.json
+└── plugins/shaping-skills/
+```
+
+Home-local layout:
+
+```text
+~/
+├── .agents/plugins/marketplace.json
+└── plugins/shaping-skills/
+```
+
+For a home-local install:
+
+```bash
+mkdir -p ~/.agents/plugins ~/plugins
+cp -R /absolute/path/to/shaping-skills/plugins/shaping-skills ~/plugins/shaping-skills
+```
+
+Then merge the `shaping-skills` entry from this repo's `.agents/plugins/marketplace.json` into `~/.agents/plugins/marketplace.json`. If you do not already have a marketplace file, copying this repo's marketplace file is fine. If you put the plugin anywhere else, update the marketplace `source.path` to match instead of assuming Codex will discover it.
 
 ## Claude
 

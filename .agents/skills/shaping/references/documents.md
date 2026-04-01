@@ -66,6 +66,16 @@ When the user provides source material during framing (user requests, quotes, em
 - **Slices doc**: Created when ready to slice, updated as slice scope clarifies
 - **Slice plans**: Individual files (V1-plan.md, etc.) with implementation details
 
+## Review Workflow
+
+Plans are documents, not terminal output.
+
+- Write planning artifacts to markdown files
+- Review the markdown file, not a terminal dump of the same content
+- For slice implementation work, create or update files like `V1-plan.md`
+- If the environment supports opening files, open the markdown file after writing it
+- If the environment cannot open files directly, provide the path and keep any terminal summary brief
+
 ## Frontmatter
 
 Every shaping document (shaping doc, frame, slices doc) must include `shaping: true` in its YAML frontmatter. This enables tooling hooks (e.g., ripple-check reminders) that help maintain consistency across documents.

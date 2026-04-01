@@ -257,6 +257,15 @@ Summaries hide detail and shift control away from the user.
 
 When re-rendering a requirements table or shape table after making changes, mark every changed or added line with a 🟡 so the user can instantly spot what's different. Place the 🟡 at the start of the changed cell content. This makes iterative refinement easy to follow — the user should never have to diff the table mentally.
 
+### Plans Belong in Markdown Files
+
+Do not dump full plans into the terminal/chat stream. Planning artifacts are documents.
+
+- When asked for a plan, write or update a markdown file (`slices.md`, `V1-plan.md`, `spike.md`, etc.)
+- Put the full plan in the file, not in the terminal response
+- After writing it, open the markdown file for review when the environment supports that
+- If the environment cannot open files directly, point the user to the file path and keep the terminal summary minimal
+
 ## Spikes
 
 Investigation tasks to learn how the existing system works and identify concrete steps for implementation. Always create them in their own file (`spike.md` or `spike-[topic].md`). See `references/spikes.md` for structure, acceptance guidelines, and question patterns.
@@ -370,7 +379,7 @@ Look across all named groups and ask: which are more unknown than the others? St
 
 **Document outputs:**
 - **Slices doc** — slice definitions, per-slice affordance tables, sliced breadboard
-- **Slice plans** — individual implementation plans (V1-plan.md, V2-plan.md, etc.)
+- **Slice plans** — individual implementation plan files (V1-plan.md, V2-plan.md, etc.) written for review, not pasted into terminal output
 
 ## Example
 

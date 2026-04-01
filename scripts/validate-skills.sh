@@ -10,39 +10,62 @@ SKILLS=(
   breadboard-reflection
 )
 
-check_file() {
+check_path() {
   local path="$1"
-  [[ -f "$path" ]] || {
-    echo "Missing file: $path" >&2
+  local kind="${2:-file}"
+
+  [[ -e "$path" ]] || {
+    echo "Missing $kind: $path" >&2
     exit 1
   }
 }
 
+list_tree_files() {
+  local dir="$1"
+  (
+    cd "$dir"
+    find . -type f | LC_ALL=C sort
+  )
+}
+
+compare_tree() {
+  local source_dir="$1"
+  local target_dir="$2"
+  local label="$3"
+  local rel
+
+  check_path "$source_dir" "directory"
+  check_path "$target_dir" "directory"
+
+  if ! diff -u <(list_tree_files "$source_dir") <(list_tree_files "$target_dir") >/dev/null; then
+    echo "File layout drift detected in $label" >&2
+    diff -u <(list_tree_files "$source_dir") <(list_tree_files "$target_dir") >&2 || true
+    exit 1
+  fi
+
+  while IFS= read -r rel; do
+    cmp -s "$source_dir/$rel" "$target_dir/$rel" || {
+      echo "Content drift detected in $label: $rel" >&2
+      exit 1
+    }
+  done < <(list_tree_files "$source_dir")
+}
+
 for skill in "${SKILLS[@]}"; do
-  check_file "$ROOT/$skill/SKILL.md"
-  check_file "$ROOT/$skill/agents/openai.yaml"
-  check_file "$ROOT/.agents/skills/$skill/SKILL.md"
-  check_file "$ROOT/.agents/skills/$skill/agents/openai.yaml"
-  check_file "$ROOT/plugins/shaping-skills/skills/$skill/SKILL.md"
-  check_file "$ROOT/plugins/shaping-skills/skills/$skill/agents/openai.yaml"
+  check_path "$ROOT/$skill/SKILL.md"
+  check_path "$ROOT/$skill/agents/openai.yaml"
 
   rg -q '^name:' "$ROOT/$skill/SKILL.md"
   rg -q '^description:' "$ROOT/$skill/SKILL.md"
 
-  cmp -s "$ROOT/$skill/SKILL.md" "$ROOT/.agents/skills/$skill/SKILL.md"
-  cmp -s "$ROOT/$skill/agents/openai.yaml" "$ROOT/.agents/skills/$skill/agents/openai.yaml"
-  cmp -s "$ROOT/$skill/SKILL.md" "$ROOT/plugins/shaping-skills/skills/$skill/SKILL.md"
-  cmp -s "$ROOT/$skill/agents/openai.yaml" "$ROOT/plugins/shaping-skills/skills/$skill/agents/openai.yaml"
-
-  if [[ -d "$ROOT/$skill/references" ]]; then
-    while IFS= read -r -d '' ref; do
-      rel="${ref#$ROOT/$skill/}"
-      check_file "$ROOT/.agents/skills/$skill/$rel"
-      check_file "$ROOT/plugins/shaping-skills/skills/$skill/$rel"
-      cmp -s "$ROOT/$skill/$rel" "$ROOT/.agents/skills/$skill/$rel"
-      cmp -s "$ROOT/$skill/$rel" "$ROOT/plugins/shaping-skills/skills/$skill/$rel"
-    done < <(find "$ROOT/$skill/references" -type f -print0)
-  fi
+  compare_tree \
+    "$ROOT/$skill" \
+    "$ROOT/.agents/skills/$skill" \
+    ".agents/skills/$skill"
+  compare_tree \
+    "$ROOT/$skill" \
+    "$ROOT/plugins/shaping-skills/skills/$skill" \
+    "plugins/shaping-skills/skills/$skill"
 done
 
 jq -e '
