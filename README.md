@@ -125,23 +125,12 @@ Please write `V1-plan.md` for the first slice. Include how you will test it your
 
 ## Installation
 
-Skills install to `.agents/skills/` and get symlinked into `.claude/skills/` for Claude discovery.
+### Claude Code
 
-### User-level (default)
-
-```bash
-./install.sh
 ```
-
-Copies skills to `~/.agents/skills/` and symlinks `~/.claude/skills/` to them.
-
-### Project-level
-
-```bash
-./install.sh --project
+/plugin marketplace add dpaluy/shaping-skills
+/plugin install shaping-skills
 ```
-
-Same thing but into `.agents/skills/` and `.claude/skills/` in the current directory.
 
 ### Codex
 
