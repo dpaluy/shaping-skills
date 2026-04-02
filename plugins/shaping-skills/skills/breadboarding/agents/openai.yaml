@@ -1,6 +1,0 @@
-interface:
-  display_name: "Breadboarding"
-  short_description: "Map places, affordances, stores, and wiring for an existing or proposed system."
-  default_prompt: "Breadboard this workflow into places, affordances, stores, and wiring."
-policy:
-  allow_implicit_invocation: true

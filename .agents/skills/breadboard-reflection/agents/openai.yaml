@@ -1,6 +1,0 @@
-interface:
-  display_name: "Breadboard Reflection"
-  short_description: "Sync a breadboard to the code, then find design smells and missing wiring."
-  default_prompt: "Compare this breadboard to the implementation and surface design smells."
-policy:
-  allow_implicit_invocation: false

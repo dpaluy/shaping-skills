@@ -123,67 +123,29 @@ Example:
 Please write `V1-plan.md` for the first slice. Include how you will test it yourself to ensure it's working, then open the markdown file for review.
 ```
 
-## Codex
+## Installation
 
-### Use this repo directly
+Skills install to `.agents/skills/` and get symlinked into `.claude/skills/` for Claude discovery.
 
-Open the repository in Codex. Repo-scoped skills are exposed through `.agents/skills/`.
-
-This repo also includes a publishable Codex plugin layout:
-
-- Plugin manifest: `plugins/shaping-skills/.codex-plugin/plugin.json`
-- Repo marketplace entry: `.agents/plugins/marketplace.json`
-
-Top-level skill directories are the canonical source. Codex-facing copies are synced into:
-
-- `.agents/skills/`
-- `plugins/shaping-skills/skills/`
-
-### Reuse the plugin elsewhere
-
-Codex resolves the plugin path relative to the marketplace file. The shipped marketplace entry uses `./plugins/shaping-skills`, so the filesystem layout must match that path exactly.
-
-Repo-local layout:
-
-```text
-<repo>/
-├── .agents/plugins/marketplace.json
-└── plugins/shaping-skills/
-```
-
-Home-local layout:
-
-```text
-~/
-├── .agents/plugins/marketplace.json
-└── plugins/shaping-skills/
-```
-
-For a home-local install:
+### User-level (default)
 
 ```bash
-mkdir -p ~/.agents/plugins ~/plugins
-cp -R /absolute/path/to/shaping-skills/plugins/shaping-skills ~/plugins/shaping-skills
+./install.sh
 ```
 
-Then merge the `shaping-skills` entry from this repo's `.agents/plugins/marketplace.json` into `~/.agents/plugins/marketplace.json`. If you do not already have a marketplace file, copying this repo's marketplace file is fine. If you put the plugin anywhere else, update the marketplace `source.path` to match instead of assuming Codex will discover it.
+Copies skills to `~/.agents/skills/` and symlinks `~/.claude/skills/` to them.
 
-## Claude
-
-From your repo checkout, symlink the `.agents` copies into your Claude skills directory:
+### Project-level
 
 ```bash
-REPO=/absolute/path/to/shaping-skills
-mkdir -p ~/.claude/skills
-ln -s "$REPO/.agents/skills/framing-doc" ~/.claude/skills/framing-doc
-ln -s "$REPO/.agents/skills/kickoff-doc" ~/.claude/skills/kickoff-doc
-ln -s "$REPO/.agents/skills/breadboarding" ~/.claude/skills/breadboarding
-ln -s "$REPO/.agents/skills/breadboard-reflection" ~/.claude/skills/breadboard-reflection
-ln -s "$REPO/.agents/skills/shaping" ~/.claude/skills/shaping
+./install.sh --project
 ```
 
-The repo can live anywhere. `~/.local/share/shaping-skills` is not special.
-Each skill must still be a direct child of `~/.claude/skills/` so Claude can discover it.
+Same thing but into `.agents/skills/` and `.claude/skills/` in the current directory.
+
+### Codex
+
+Open this repo directly in Codex. Skills are discovered through `.agents/skills/`. A publishable plugin layout is also available in `plugins/shaping-skills/`.
 
 ## Ripple Hook
 
@@ -193,7 +155,7 @@ The repo includes a hook that reminds Claude to check ripple effects when editin
 - update fit checks when requirements or shape parts change
 - update work stream detail when the work stream design changes
 
-### Claude setup
+To install:
 
 1. Symlink the hook script:
 
@@ -222,28 +184,4 @@ ln -s "$REPO/hooks/shaping-ripple.sh" ~/.claude/hooks/shaping-ripple.sh
     ]
   }
 }
-```
-
-### Codex note
-
-Codex hooks are not a drop-in replacement for the Claude edit hook. This repo keeps ripple reminders in the skill instructions for Codex rather than pretending there is exact hook parity.
-
-## Maintainers
-
-After editing any canonical skill, sync the Codex-facing copies:
-
-```bash
-./scripts/sync-codex-skills.sh
-```
-
-Then validate the packaging:
-
-```bash
-./scripts/validate-skills.sh
-```
-
-To preview markdown through GitHub Flavored Markdown:
-
-```bash
-./test-gfm.sh breadboarding/SKILL.md
 ```
