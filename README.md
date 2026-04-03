@@ -13,14 +13,6 @@ This repo encodes a workflow from [Shape Up](https://basecamp.com/shapeup):
 
 The skills work with both Codex and Claude.
 
-## Case Study
-
-[Shaping 0-1 with Claude Code](https://x.com/rjs/status/2020184079350563263) shows the workflow end to end: blank directory -> shaping doc -> spikes -> breadboard -> slices -> working product.
-
-That article is useful because it shows the actual interaction pattern, not just the final docs. The companion project is here:
-
-- [rjs/tick](https://github.com/rjs/tick)
-
 ## What These Skills Produce
 
 - **Frame**: source material, problem, and outcome
@@ -134,7 +126,26 @@ Please write `V1-plan.md` for the first slice. Include how you will test it your
 
 ### Codex
 
-Open this repo directly in Codex. Skills are discovered through `.agents/skills/`. A publishable plugin layout is also available in `plugins/shaping-skills/`.
+You can use this repo in Codex in three ways:
+
+1. Open this repo directly in Codex. The repo already exposes the skills through `.agents/skills/`.
+2. Install the skills globally for your user:
+
+```bash
+./install.sh --user
+```
+
+This copies the skills into `~/.agents/skills/` and symlinks them into `~/.claude/skills/`.
+
+3. Install the skills only into the current project:
+
+```bash
+./install.sh --project
+```
+
+This copies the skills into `.agents/skills/` and symlinks them into `.claude/skills/` for the directory where you run the command.
+
+A publishable Codex plugin layout is also available in `plugins/shaping-skills/`.
 
 ## Ripple Hook
 
