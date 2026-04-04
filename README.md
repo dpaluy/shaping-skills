@@ -13,6 +13,10 @@ This repo encodes a workflow from [Shape Up](https://basecamp.com/shapeup):
 
 The skills work with Pi, Codex, and Claude.
 
+This package is adapted from the original [rjs/shaping-skills](https://github.com/rjs/shaping-skills) project.
+
+[Shaping 0-1 with Claude Code](https://x.com/rjs/status/2020184079350563263) shows the workflow end to end: blank directory -> shaping doc -> spikes -> breadboard -> slices -> working product.
+
 Canonical skill content lives in `skills/`. Tool-specific manifests and plugin folders point at that single source of truth.
 
 ## What These Skills Produce
