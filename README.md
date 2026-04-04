@@ -11,7 +11,9 @@ This repo encodes a workflow from [Shape Up](https://basecamp.com/shapeup):
 5. Slice the system into demoable vertical scopes
 6. Build slice by slice
 
-The skills work with both Codex and Claude.
+The skills work with Pi, Codex, and Claude.
+
+Canonical skill content lives in `skills/`. Tool-specific manifests and plugin folders point at that single source of truth.
 
 ## What These Skills Produce
 
@@ -123,6 +125,28 @@ Please write `V1-plan.md` for the first slice. Include how you will test it your
 /plugin marketplace add dpaluy/shaping-skills
 /plugin install shaping-skills
 ```
+
+### Pi
+
+Install directly from a local path:
+
+```bash
+pi install /absolute/path/to/shaping-skills
+```
+
+Or install from git:
+
+```bash
+pi install git:github.com/dpaluy/shaping-skills
+```
+
+After publishing to npm, install with:
+
+```bash
+pi install npm:@dpaluy/shaping-skills
+```
+
+Pi discovers the skills from the package manifest and conventional `skills/` directory.
 
 ### Codex
 

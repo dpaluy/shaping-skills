@@ -1,0 +1,37 @@
+{
+  "name": "@dpaluy/shaping-skills",
+  "version": "0.1.1",
+  "description": "Cross-tool shaping, breadboarding, and transcript-to-document skills.",
+  "author": {
+    "name": "David Paluy",
+    "url": "https://github.com/dpaluy"
+  },
+  "keywords": [
+    "pi-package",
+    "pi",
+    "codex",
+    "claude",
+    "skills",
+    "shape-up",
+    "shaping",
+    "breadboarding"
+  ],
+  "homepage": "https://github.com/dpaluy/shaping-skills",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpaluy/shaping-skills.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "README.md",
+    "install.sh",
+    "skills"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}
