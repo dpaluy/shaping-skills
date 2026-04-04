@@ -1,7 +1,7 @@
 {
   "name": "shaping-skills",
-  "version": "0.1.0",
-  "description": "Shaping, breadboarding, and transcript-to-document skills for Codex and Claude.",
+  "version": "0.1.1",
+  "description": "Cross-tool shaping, breadboarding, and transcript-to-document skills.",
   "author": {
     "name": "David Paluy",
     "url": "https://github.com/dpaluy"
@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "Shaping Skills",
     "shortDescription": "Shape problems, breadboard systems, and distill transcripts into build docs.",
-    "longDescription": "A dual-target skill pack for collaborative shaping before implementation: framing docs, kickoff docs, shaping, breadboarding, and breadboard reflection.",
+    "longDescription": "A cross-tool skill pack for collaborative shaping before implementation: framing docs, kickoff docs, shaping, breadboarding, and breadboard reflection.",
     "developerName": "David Paluy",
     "category": "Productivity",
     "capabilities": [

@@ -3,6 +3,11 @@ set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")" && pwd)"
 SKILLS=(shaping framing-doc kickoff-doc breadboarding breadboard-reflection)
+SKILLS_ROOT="$REPO/skills"
+
+if [[ ! -d "$SKILLS_ROOT" ]]; then
+  SKILLS_ROOT="$REPO"
+fi
 
 usage() {
   cat <<EOF
@@ -32,7 +37,7 @@ mkdir -p "$AGENTS_DIR" "$CLAUDE_DIR"
 
 for skill in "${SKILLS[@]}"; do
   rm -rf "${AGENTS_DIR:?}/$skill"
-  cp -R "$REPO/$skill" "$AGENTS_DIR/$skill"
+  cp -R "$SKILLS_ROOT/$skill" "$AGENTS_DIR/$skill"
   ln -sfn "$AGENTS_DIR/$skill" "$CLAUDE_DIR/$skill"
 done
 
