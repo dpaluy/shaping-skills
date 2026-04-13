@@ -35,6 +35,7 @@ The point is not to make prettier markdown. The point is to force the agent to s
 |------|---------------|-------------|
 | `shaping` | Captures requirements, shapes, fit checks, spikes, and slice handoff | You are defining a feature, comparing solutions, or scoping work before implementation |
 | `breadboarding` | Maps UI affordances, code affordances, stores, places, and wiring | You need to understand or detail how a system works in concrete terms |
+| `slicing` | Slices a breadboard into vertical, demo-able implementation increments | You have a breadboard and want to plan buildable slices |
 | `breadboard-reflection` | Syncs a breadboard to the implementation and surfaces design smells | You already have a breadboard and want to check it against the code |
 | `framing-doc` | Distills transcripts into a frame with problem, outcome, and evidence | You have source conversations and need the "why now" documented |
 | `kickoff-doc` | Converts a kickoff transcript into a builder-facing territory map | The work is shaped and you want a usable handoff doc |
@@ -154,10 +155,11 @@ Pi discovers the skills from the package manifest and conventional `skills/` dir
 
 ### Codex
 
-You can use this repo in Codex in three ways:
+You can use this repo in Codex in two ways:
 
-1. Open this repo directly in Codex. The repo already exposes the skills through `.agents/skills/`.
-2. Install the skills globally for your user:
+Run `install.sh` first to set up the skill directories.
+
+1. Install the skills globally for your user:
 
 ```bash
 ./install.sh --user
@@ -165,7 +167,7 @@ You can use this repo in Codex in three ways:
 
 This copies the skills into `~/.agents/skills/` and symlinks them into `~/.claude/skills/`.
 
-3. Install the skills only into the current project:
+2. Install the skills only into the current project:
 
 ```bash
 ./install.sh --project

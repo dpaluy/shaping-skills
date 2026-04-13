@@ -1,6 +1,7 @@
 {
   "name": "@dpaluy/shaping-skills",
   "version": "0.1.1",
+  "license": "MIT",
   "description": "Cross-tool shaping, breadboarding, and transcript-to-document skills.",
   "author": {
     "name": "David Paluy",
