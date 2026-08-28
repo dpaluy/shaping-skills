@@ -1,0 +1,6 @@
+interface:
+  display_name: "Kickoff Doc"
+  short_description: "Turn a kickoff transcript into a builder-facing map of the shaped territory."
+  default_prompt: "Turn this kickoff transcript into a builder-facing reference document."
+policy:
+  allow_implicit_invocation: false

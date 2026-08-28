@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Cursor plugin manifest and local installation instructions
+- Claude Code marketplace manifest and validated installation command
+- Codex plugin validation for complete, materialized skill packages
 - MIT LICENSE file (copyright David Paluy)
 - New `slicing` skill — split out from breadboarding into its own skill with agents manifest
 - CHANGELOG.md
@@ -16,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Claude Code plugin manifest no longer includes the unsupported `interface` field
+- Codex plugin now packages all six skills as real directories instead of unsupported symlinks
 - README.md: removed false claim that `.agents/skills/` exists in the repo
 - README.md: added note that Codex users need to run `install.sh` first
 - README.md: added `slicing` to the skills table

@@ -1,16 +1,16 @@
 {
   "name": "shaping-skills",
+  "displayName": "Shaping Skills",
   "version": "0.1.1",
-  "description": "Cross-tool shaping, breadboarding, and transcript-to-document skills.",
+  "description": "Shape product ideas, breadboard systems, and turn transcripts into build documents.",
   "author": {
-    "name": "David Paluy",
-    "url": "https://github.com/dpaluy"
+    "name": "David Paluy"
   },
   "homepage": "https://github.com/dpaluy/shaping-skills",
   "repository": "https://github.com/dpaluy/shaping-skills",
   "license": "MIT",
   "keywords": [
-    "claude",
+    "cursor",
     "skills",
     "shape-up",
     "shaping",

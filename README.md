@@ -11,13 +11,13 @@ This repo encodes a workflow from [Shape Up](https://basecamp.com/shapeup):
 5. Slice the system into demoable vertical scopes
 6. Build slice by slice
 
-The skills work with Pi, Codex, and Claude.
+The skills work with Pi, Codex, Claude, and Cursor.
 
 This package is adapted from the original [rjs/shaping-skills](https://github.com/rjs/shaping-skills) project.
 
 [Shaping 0-1 with Claude Code](https://x.com/rjs/status/2020184079350563263) shows the workflow end to end: blank directory -> shaping doc -> spikes -> breadboard -> slices -> working product.
 
-Canonical skill content lives in `skills/`. Tool-specific manifests and plugin folders point at that single source of truth.
+Canonical skill content lives in `skills/`. Tool-specific manifests reference it where supported. The publishable Codex plugin contains materialized copies because Codex ignores symlinked plugin skills. Run `npm run validate:codex-plugin` to detect missing or stale copies.
 
 ## What These Skills Produce
 
@@ -124,11 +124,26 @@ Please write `V1-plan.md` for the first slice. Include how you will test it your
 
 ## Installation
 
+### Cursor
+
+This repository is a single Cursor plugin. Its manifest is at `.cursor-plugin/plugin.json`.
+
+Before marketplace publication, test it locally:
+
+```bash
+mkdir -p ~/.cursor/plugins/local
+ln -s /absolute/path/to/shaping-skills ~/.cursor/plugins/local/shaping-skills
+```
+
+Restart Cursor or run **Developer: Reload Window**, then open **Customize** and confirm that the skills are available.
+
+After the plugin is published, open **Customize**, find **Shaping Skills**, select **Install**, and choose user or project scope. Cursor reviews public marketplace submissions at [cursor.com/marketplace/publish](https://cursor.com/marketplace/publish).
+
 ### Claude Code
 
 ```
 /plugin marketplace add dpaluy/shaping-skills
-/plugin install shaping-skills
+/plugin install shaping-skills@shaping-skills
 ```
 
 ### Pi
@@ -175,7 +190,11 @@ This copies the skills into `~/.agents/skills/` and symlinks them into `~/.claud
 
 This copies the skills into `.agents/skills/` and symlinks them into `.claude/skills/` for the directory where you run the command.
 
-A publishable Codex plugin layout is also available in `plugins/shaping-skills/`.
+A publishable Codex plugin layout is also available in `plugins/shaping-skills/`. Its skill directories must be real files, not symlinks. After changing a canonical skill, update the plugin copy and run:
+
+```bash
+npm run validate:codex-plugin
+```
 
 ## Ripple Hook
 

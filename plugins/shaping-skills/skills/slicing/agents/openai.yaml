@@ -1,0 +1,6 @@
+interface:
+  display_name: "Slicing"
+  short_description: "Slice a breadboard into vertical, demo-able implementation increments."
+  default_prompt: "Slice the breadboard into vertical increments, each with a demo statement."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "shaping-skills",
+  "description": "Shaping and planning skills for software product development.",
+  "version": "0.1.1",
+  "owner": {
+    "name": "David Paluy",
+    "url": "https://github.com/dpaluy"
+  },
+  "plugins": [
+    {
+      "name": "shaping-skills",
+      "source": "./",
+      "description": "Shape product ideas, breadboard systems, and turn transcripts into build documents.",
+      "version": "0.1.1",
+      "author": {
+        "name": "David Paluy",
+        "url": "https://github.com/dpaluy"
+      },
+      "homepage": "https://github.com/dpaluy/shaping-skills",
+      "repository": "https://github.com/dpaluy/shaping-skills",
+      "license": "MIT",
+      "category": "productivity",
+      "keywords": [
+        "skills",
+        "shape-up",
+        "shaping",
+        "breadboarding"
+      ]
+    }
+  ]
+}

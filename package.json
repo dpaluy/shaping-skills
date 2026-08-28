@@ -25,6 +25,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "validate:codex-plugin": "node scripts/validate-codex-plugin.mjs"
+  },
   "files": [
     "README.md",
     "install.sh",

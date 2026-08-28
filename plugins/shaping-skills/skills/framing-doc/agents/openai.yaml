@@ -1,0 +1,6 @@
+interface:
+  display_name: "Framing Doc"
+  short_description: "Turn transcripts into an evidence-backed frame for what to solve and why now."
+  default_prompt: "Turn these transcripts into a framing document with evidence and option tradeoffs."
+policy:
+  allow_implicit_invocation: false
