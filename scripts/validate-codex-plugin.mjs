@@ -2,7 +2,6 @@ import { readFileSync, readdirSync, lstatSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const repoRoot = process.cwd();
-const canonicalRoot = join(repoRoot, "skills");
 const pluginRoot = join(repoRoot, "plugins", "shaping-skills");
 const pluginSkillsRoot = join(pluginRoot, "skills");
 
@@ -49,29 +48,11 @@ function files(root, current = root) {
   return result.sort();
 }
 
-const canonicalSkills = skillNames(canonicalRoot);
 const pluginSkills = skillNames(pluginSkillsRoot);
-if (JSON.stringify(pluginSkills) !== JSON.stringify(canonicalSkills)) {
-  throw new Error(
-    `Codex plugin skills differ from canonical skills: expected ${canonicalSkills.join(", ")}; got ${pluginSkills.join(", ")}`,
-  );
+if (pluginSkills.length === 0) {
+  throw new Error("Codex plugin contains no skills");
 }
 
-for (const skill of canonicalSkills) {
-  const canonicalSkill = join(canonicalRoot, skill);
-  const pluginSkill = join(pluginSkillsRoot, skill);
-  const canonicalFiles = files(canonicalSkill);
-  const pluginFiles = files(pluginSkill);
-  if (JSON.stringify(pluginFiles) !== JSON.stringify(canonicalFiles)) {
-    throw new Error(`Codex plugin file list is stale for skill: ${skill}`);
-  }
-  for (const file of canonicalFiles) {
-    const canonical = readFileSync(join(canonicalSkill, file));
-    const packaged = readFileSync(join(pluginSkill, file));
-    if (!canonical.equals(packaged)) {
-      throw new Error(`Codex plugin file is stale: ${join(skill, file)}`);
-    }
-  }
-}
+for (const skill of pluginSkills) files(join(pluginSkillsRoot, skill));
 
-console.log(`Codex plugin valid; ${pluginSkills.length} materialized skills match canonical sources.`);
+console.log(`Codex plugin valid; ${pluginSkills.length} canonical skills found.`);

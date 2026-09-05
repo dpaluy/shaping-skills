@@ -5,13 +5,21 @@ description: Use when the user has conversation transcripts and wants a framing 
 
 # Framing from Conversation Transcripts
 
+## Scope and user instructions
+
+The user's explicit instructions take precedence over this skill's workflow and formatting defaults, including its reference files. Use the existing conversation and supplied inputs. Ask only when missing information changes the scope, outcome, or required permission. Continue authorized work that does not depend on the answer.
+
+Complete the requested artifact or analysis. A review request calls for findings; change files only when the user requests changes. Shaping, mapping, and slicing do not authorize product implementation or external actions.
+
+Keep chat replies concise. Preserve complete tables in requested artifacts, and follow the user's requested detail level in chat. If a skill instruction blocks requested work, link to the exact skill file, quote the instruction, and explain the missing decision or permission.
+
 Produce a frame document from one or more conversation transcripts. The frame captures the "why" — what problem to solve and why this one, not the others.
 
 ---
 
 ## Before You Start
 
-Ask the user:
+Use the supplied transcripts and topic. Ask only for missing information needed to identify the sources or scope:
 
 1. **Which transcripts?** Get specific file paths. Read them in the order the user specifies — conversation order often matters because ideas build across calls.
 2. **What's the topic area?** A rough sense of what these conversations were about (e.g., "AI features," "onboarding redesign") so you know what to listen for.

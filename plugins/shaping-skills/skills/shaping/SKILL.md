@@ -10,6 +10,14 @@ description: >
 
 # Shaping Methodology
 
+## Scope and user instructions
+
+The user's explicit instructions take precedence over this skill's workflow and formatting defaults, including its reference files. Use the existing conversation and supplied inputs. Ask only when missing information changes the scope, outcome, or required permission. Continue authorized work that does not depend on the answer.
+
+Complete the requested artifact or analysis. A review request calls for findings; change files only when the user requests changes. Shaping, mapping, and slicing do not authorize product implementation or external actions.
+
+Keep chat replies concise. Preserve complete tables in requested artifacts, and follow the user's requested detail level in chat. If a skill instruction blocks requested work, link to the exact skill file, quote the instruction, and explain the missing decision or permission.
+
 A structured approach for collaboratively defining problems and exploring solution options.
 
 ---
@@ -48,7 +56,7 @@ The system only works if the levels are consistent with each other.
 
 ## Starting a Session
 
-When kicking off a new shaping session, offer the user both entry points:
+Start from the user's supplied problem, shape, or selected task. If no starting point is available, offer these entry points:
 
 - **Start from R (Requirements)** — Describe the problem, pain points, or constraints. Build up requirements and let shapes emerge.
 - **Start from S (Shapes)** — Sketch a solution already in mind. Capture it as a shape and extract requirements as you go.
@@ -237,11 +245,10 @@ For detailed guidance that does not need to stay in the main invocation path:
 
 ### Show Full Tables
 
-When displaying R (requirements) or any S (shapes), always show every row — never summarize or abbreviate. The full table is the artifact; partial views lose information and break the collaborative process.
+Keep every row in requirements, shape, and fit-check artifacts. In chat, show the requested table or comparison; when the user asks for a summary or a specific part, show that scope and link to the full artifact if available.
 
-- Show all requirements, even if many
-- Show all shape parts, including sub-parts (E1.1, E1.2...)
-- Show all alternatives in fit checks
+- Preserve full requirement text and shape parts, including sub-parts (E1.1, E1.2...)
+- Compare the alternatives requested by the user; use the selected shape by default
 
 ### Why This Matters
 

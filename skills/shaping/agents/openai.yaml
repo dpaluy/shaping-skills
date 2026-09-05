@@ -1,6 +1,0 @@
-interface:
-  display_name: "Shaping"
-  short_description: "Shape requirements, solution options, fit checks, and slices before implementation."
-  default_prompt: "Help me shape this feature before we commit to implementation."
-policy:
-  allow_implicit_invocation: true

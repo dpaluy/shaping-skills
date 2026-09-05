@@ -31,11 +31,11 @@
   "files": [
     "README.md",
     "install.sh",
-    "skills"
+    "plugins"
   ],
   "pi": {
     "skills": [
-      "./skills"
+      "./plugins/*/skills"
     ]
   }
 }
