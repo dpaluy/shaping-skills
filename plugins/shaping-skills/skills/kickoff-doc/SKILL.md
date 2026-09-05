@@ -5,16 +5,21 @@ description: Use when the user has a shaped-project kickoff transcript and wants
 
 # Kickoff Document from Transcript
 
+## Scope and user instructions
+
+The user's explicit instructions take precedence over this skill's workflow and formatting defaults, including its reference files. Use the existing conversation and supplied inputs. Ask only when missing information changes the scope, outcome, or required permission. Continue authorized work that does not depend on the answer.
+
+Complete the requested artifact or analysis. A review request calls for findings; change files only when the user requests changes. Shaping, mapping, and slicing do not authorize product implementation or external actions.
+
+Keep chat replies concise. Preserve complete tables in requested artifacts, and follow the user's requested detail level in chat. If a skill instruction blocks requested work, link to the exact skill file, quote the instruction, and explain the missing decision or permission.
+
 Turn a kickoff call transcript into a builder-facing reference document for a shaped project.
 
 ---
 
 ## Before You Start
 
-Ask the user:
-
-1. **Who is the primary audience?** (Usually the builder who will implement the work.)
-2. **What other inputs are there?** (Visuals, screenshots, mockups, breadboards from the session.)
+Use the supplied transcript and supporting material. Default to the builder as the audience unless the user specifies another audience. Ask for missing source material only when it is needed to produce the requested document.
 
 The transcript is your source material. The document is NOT a summary of the call — it's a **map of the territory** that was shaped.
 

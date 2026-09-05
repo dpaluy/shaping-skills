@@ -17,7 +17,7 @@ This package is adapted from the original [rjs/shaping-skills](https://github.co
 
 [Shaping 0-1 with Claude Code](https://x.com/rjs/status/2020184079350563263) shows the workflow end to end: blank directory -> shaping doc -> spikes -> breadboard -> slices -> working product.
 
-Canonical skill content lives in `skills/`. Tool-specific manifests reference it where supported. The publishable Codex plugin contains materialized copies because Codex ignores symlinked plugin skills. Run `npm run validate:codex-plugin` to detect missing or stale copies.
+Canonical skill content lives in `plugins/shaping-skills/skills/`. The plugin has separate compatibility manifests for Codex, Claude Code, Cursor, and Pi.
 
 ## What These Skills Produce
 
@@ -124,15 +124,25 @@ Please write `V1-plan.md` for the first slice. Include how you will test it your
 
 ## Installation
 
+### Skills CLI
+
+Install the skills into the current project with the [Skills CLI](https://skills.sh/docs/cli):
+
+```bash
+npx skills add dpaluy/shaping-skills
+```
+
+Add `--global` to install them for the current user instead.
+
 ### Cursor
 
-This repository is a single Cursor plugin. Its manifest is at `.cursor-plugin/plugin.json`.
+The Cursor marketplace manifest is at `.cursor-plugin/marketplace.json` and points to `plugins/shaping-skills/`.
 
 Before marketplace publication, test it locally:
 
 ```bash
 mkdir -p ~/.cursor/plugins/local
-ln -s /absolute/path/to/shaping-skills ~/.cursor/plugins/local/shaping-skills
+ln -s /absolute/path/to/shaping-skills/plugins/shaping-skills ~/.cursor/plugins/local/shaping-skills
 ```
 
 Restart Cursor or run **Developer: Reload Window**, then open **Customize** and confirm that the skills are available.
@@ -166,15 +176,26 @@ After publishing to npm, install with:
 pi install npm:@dpaluy/shaping-skills
 ```
 
-Pi discovers the skills from the package manifest and conventional `skills/` directory.
+Pi discovers the plugin skill tree from the package manifest.
 
 ### Codex
 
-You can use this repo in Codex in two ways:
+#### GPT-6 Astra
 
-Run `install.sh` first to set up the skill directories.
+Select `gpt-6-astra` in your coding agent. This package supplies skill instructions and has no API client or model setting to migrate.
 
-1. Install the skills globally for your user:
+The skills follow the [GPT-6 Astra instruction guidance](https://developers.openai.com/api/docs/guides/latest-model#instruction-following): user instructions take priority over workflow defaults, supplied context avoids repeated questions, and review requests produce findings without file changes. Complete tables stay in artifacts; chat follows the requested scope and detail.
+
+#### Install the plugin
+
+The Codex marketplace at `.agents/plugins/marketplace.json` points to the plugin in `plugins/shaping-skills/`:
+
+```bash
+codex plugin marketplace add .
+codex plugin add shaping-skills@shaping-skills
+```
+
+To copy only the skills into your user configuration:
 
 ```bash
 ./install.sh --user
@@ -182,7 +203,7 @@ Run `install.sh` first to set up the skill directories.
 
 This copies the skills into `~/.agents/skills/` and symlinks them into `~/.claude/skills/`.
 
-2. Install the skills only into the current project:
+To copy only the skills into the current project:
 
 ```bash
 ./install.sh --project
@@ -190,7 +211,7 @@ This copies the skills into `~/.agents/skills/` and symlinks them into `~/.claud
 
 This copies the skills into `.agents/skills/` and symlinks them into `.claude/skills/` for the directory where you run the command.
 
-A publishable Codex plugin layout is also available in `plugins/shaping-skills/`. Its skill directories must be real files, not symlinks. After changing a canonical skill, update the plugin copy and run:
+The plugin owns the canonical skill tree. After changing a skill or manifest, run:
 
 ```bash
 npm run validate:codex-plugin

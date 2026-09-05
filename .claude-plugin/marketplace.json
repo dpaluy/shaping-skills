@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "shaping-skills",
-      "source": "./",
+      "source": "./plugins/shaping-skills",
       "description": "Shape product ideas, breadboard systems, and turn transcripts into build documents.",
       "version": "0.1.1",
       "author": {

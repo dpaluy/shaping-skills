@@ -1,0 +1,16 @@
+{
+  "name": "shaping-skills",
+  "owner": {
+    "name": "David Paluy"
+  },
+  "metadata": {
+    "description": "Shaping and planning skills for software product development.",
+    "version": "0.1.1"
+  },
+  "plugins": [
+    {
+      "name": "shaping-skills",
+      "source": "./plugins/shaping-skills"
+    }
+  ]
+}

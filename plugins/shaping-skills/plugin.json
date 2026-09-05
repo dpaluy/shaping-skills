@@ -1,4 +1,5 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "shaping-skills",
   "version": "0.1.1",
   "description": "Cross-tool shaping, breadboarding, and transcript-to-document skills.",
@@ -10,11 +11,9 @@
   "repository": "https://github.com/dpaluy/shaping-skills",
   "license": "MIT",
   "keywords": [
-    "claude",
     "skills",
     "shape-up",
     "shaping",
     "breadboarding"
-  ],
-  "skills": "./skills/"
+  ]
 }

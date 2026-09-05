@@ -3,11 +3,7 @@ set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")" && pwd)"
 SKILLS=(shaping framing-doc kickoff-doc breadboarding breadboard-reflection slicing)
-SKILLS_ROOT="$REPO/skills"
-
-if [[ ! -d "$SKILLS_ROOT" ]]; then
-  SKILLS_ROOT="$REPO"
-fi
+SKILLS_ROOT="$REPO/plugins/shaping-skills/skills"
 
 usage() {
   cat <<EOF
